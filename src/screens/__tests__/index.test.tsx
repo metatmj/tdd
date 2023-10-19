@@ -3,14 +3,14 @@ import {View} from 'react-native';
 import {useNavigation} from '@react-navigation/native';
 import {render, waitFor} from '@testing-library/react-native';
 
-import AppNavigator from '../index';
+import AppNavigator from '..';
 import HomeScreen from '../HomeScreen';
 import WeatherScreen from '../WeatherScreen';
 
 jest.mock('../HomeScreen', () => jest.fn());
 jest.mock('../WeatherScreen', () => jest.fn());
 
-describe('AppNavigator', async () => {
+describe('AppNavigator', () => {
   test('should render home page by default', async () => {
     (HomeScreen as jest.Mock).mockReturnValueOnce(
       <View testID="mock-home-screen" />,
@@ -33,10 +33,14 @@ describe('AppNavigator', async () => {
       return null;
     });
 
-    (WeatherScreen as jest.Mock).mockRejectedValueOnce(
+    (WeatherScreen as jest.Mock).mockReturnValueOnce(
       <View testID="mock-weather-screen" />,
     );
 
     const wrapper = render(<AppNavigator />);
+
+    await waitFor(() => {
+      wrapper.getByTestId('mock-weather-screen');
+    });
   });
 });

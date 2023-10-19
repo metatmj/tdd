@@ -5,7 +5,7 @@ import {View} from 'react-native';
 import App from '../App';
 import AppNavigator from '../screens';
 
-jest.mock('../screen', () => jest.fn());
+jest.mock('../screens', () => jest.fn());
 
 describe('App', () => {
   test('should render routes', () => {
